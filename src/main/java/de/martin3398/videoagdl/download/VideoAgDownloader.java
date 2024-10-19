@@ -49,8 +49,11 @@ public class VideoAgDownloader {
 
         String[] split = read.split("<li");
         for (String e : split) {
-            if (e.contains("mp4") && e.contains(quality)) {
-                videosLinks.add(VIDEO_AG_URL + e.substring(e.indexOf("<a href=\"") + 9, e.indexOf("\">")));
+            if ((e.contains("SDV") || e.contains("mp4")) && e.contains(quality)) {
+                String url = VIDEO_AG_URL + e.substring(e.indexOf("<a href=\"") + 9, e.indexOf(">", 1));
+                url = url.substring(0, url.indexOf("\""))
+                        .replaceAll("(?<!:)/+", "/");
+                videosLinks.add(url);
             }
         }
     }
